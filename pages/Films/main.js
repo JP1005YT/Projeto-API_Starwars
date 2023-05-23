@@ -29,17 +29,20 @@ async function pegarInfos(link) {
     const resposta = await fetch(link);
     const dados = await resposta.json();
     return dados;
-  }  
+  }
 
 function ConstruirTodos(array){
     array.results.forEach(function(element,n){
         let number = n + 1
-        let span = document.createElement('span')
-        span.innerHTML = element.title
-        span.addEventListener("click",e =>{
+        let div = document.createElement('div')
+        let img = document.createElement('img')
+        img.setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${element.title.toLowerCase()}.jpg`)
+        img.setAttribute("width","300px")
+        div.appendChild(img)
+        div.addEventListener("click",e =>{
             window.location.href = `http://localhost/starWars2.0/pages/Films?id=${number}`
         })
-        document.querySelector("body").appendChild(span)
+        document.querySelector("body").appendChild(div)
     });
 }
 

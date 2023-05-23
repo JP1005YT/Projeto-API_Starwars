@@ -9,15 +9,12 @@ h1{
     font-family: 'Poppins', sans-serif;
 }
 body{
-    overflow: hidden;
     display: flex;
     justify-content: space-evenly;
     flex-direction: column;
     align-items: center;
     position: relative;
     width: 100vw;
-    height: 100vh;
-    overflow-x: hidden;
     background: linear-gradient(135deg,black,rgb(0, 0, 78))
 }
 body > span{
