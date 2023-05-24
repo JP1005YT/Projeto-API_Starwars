@@ -1,4 +1,4 @@
-url = "https://swapi.dev/api/films/"
+url = "https://swapi.dev/api/people/"
 
 const queryString = window.location.search
 const params = new URLSearchParams(queryString)
@@ -31,22 +31,22 @@ async function pegarInfos(link) {
     return dados;
   }
 
-function ConstruirTodos(array){
+  function ConstruirTodos(array){
     array.results.forEach(function(element,n){
         let number = n + 1
         let div = document.createElement('div')
         let img = document.createElement('img')
         let span = document.createElement('span')
-        img.setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${element.title.toLowerCase()}.jpg`)
+        img.setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${element.name.toLowerCase()}.jpg`)
         img.setAttribute("width","300px")
-        span.innerHTML = element.title
+        span.innerHTML = element.name
         div.appendChild(img)
         div.appendChild(span)
         div.addEventListener("click",e =>{
-            window.location.href = `http://localhost/starWars2.0/pages/Films?id=${number}`
+            window.location.href = `http://localhost/starWars2.0/pages/Peoples?id=${number}`
         })
         document.querySelector("body").appendChild(div)
-    });
+    })
 }
 
 async function ConstruirCada(array){
@@ -54,7 +54,7 @@ async function ConstruirCada(array){
     console.log(array)
     let div_o = document.querySelector("#one")
     div_o.classList.toggle("ativo")
-    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${array.title.toLowerCase()}.jpg?c=${Math.random()}`)
+    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${array.name.toLowerCase()}.jpg?c=${Math.random()}`)
 
     let objetos = Object.keys(array)
     objetos.forEach(element =>{
@@ -70,18 +70,12 @@ async function ConstruirCada(array){
                     let ultimoDigito = url.slice(-1).charAt(0);
                     switch (element) {
                         // esse switch monta link por link
-                        case "planets":
+                        case "films":
                             let link = document.createElement("a")
                             link.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                            link.innerHTML = resposta['name']
+                            link.innerHTML = resposta['title']
                             document.querySelector(`#${element}`).appendChild(link)
                             break;
-                        case "species":
-                            let links = document.createElement("a")
-                            links.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                            links.innerHTML = resposta['name']
-                            document.querySelector(`#${element}`).appendChild(links)
-                            break
                         case "starships":
                             let linkst = document.createElement("a")
                             linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
@@ -94,12 +88,6 @@ async function ConstruirCada(array){
                                 linkv.innerHTML = resposta['name']
                                 document.querySelector(`#${element}`).appendChild(linkv)
                                 break
-                        case "characters":
-                                let linkc = document.createElement("a")
-                                linkc.setAttribute("href",`http://localhost/starWars2.0/pages/peoples?id=${ultimoDigito}`)
-                                linkc.innerHTML = resposta['name']
-                                document.querySelector(`#${element}`).appendChild(linkc)
-                                break
                         default:
                             break;
                     }
@@ -107,7 +95,13 @@ async function ConstruirCada(array){
             }else{
                 // Se for texto cai nesse
                 let span = document.createElement("span")
-                span.innerHTML = array[element]
+                if(array[element].includes("https")){
+                    // let ultimoDigito = array[element].slice(-2).charAt(0);
+                    // let resposta = pegarInfos(array[element])
+                }else{
+                    span.innerHTML = array[element]
+                }
+                
                 document.querySelector(`#${element}`).appendChild(span)
             }
         }

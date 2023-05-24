@@ -49,7 +49,7 @@ body > span:hover{
     display: flex;
     flex-direction: column;
     width: 15%;
-    border: 2px solid black;
+    border: 1px solid black;
 }
 body > div{
     display: flex;
@@ -63,7 +63,7 @@ body > div{
 }
 body > div:hover{
     cursor: pointer;
-    box-shadow: 0 0 50px #ffe919;;
+    box-shadow: 0 0 10px black inset;
 }
 body > div > span{
     font-size: 20px;
