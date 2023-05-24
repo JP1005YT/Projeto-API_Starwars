@@ -36,9 +36,12 @@ function ConstruirTodos(array){
         let number = n + 1
         let div = document.createElement('div')
         let img = document.createElement('img')
+        let span = document.createElement('span')
         img.setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${element.title.toLowerCase()}.jpg`)
         img.setAttribute("width","300px")
+        span.innerHTML = element.title
         div.appendChild(img)
+        div.appendChild(span)
         div.addEventListener("click",e =>{
             window.location.href = `http://localhost/starWars2.0/pages/Films?id=${number}`
         })

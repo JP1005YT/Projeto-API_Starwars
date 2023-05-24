@@ -39,19 +39,19 @@ botoes.forEach(element => {
                 window.location.href = "./pages/Films/";
             break;
             case "Peoples":
-                window.location.href = "./pages/Films/";
+                window.location.href = "./pages/Peoples/";
             break;
             case "Planets":
-                window.location.href = "./pages/Films/";
+                window.location.href = "./pages/Planets/";
             break;
             case "Species":
-                window.location.href = "./pages/Films/";
+                window.location.href = "./pages/Species/";
             break;
             case "Starships":
-                window.location.href = "./pages/Films/";
+                window.location.href = "./pages/Starships/";
             break;
             case "Vehicles":
-                window.location.href = "./pages/Films/";
+                window.location.href = "./pages/Vehicles/";
             break;
         }
     })
