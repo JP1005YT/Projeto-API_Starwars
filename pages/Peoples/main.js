@@ -37,7 +37,7 @@ async function pegarInfos(link) {
         let div = document.createElement('div')
         let img = document.createElement('img')
         let span = document.createElement('span')
-        img.setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${element.name.toLowerCase()}.jpg`)
+        img.setAttribute("src",`http://localhost/starWars2.0/resources/peoples/${element.name.toLowerCase()}.jpg`)
         img.setAttribute("width","300px")
         span.innerHTML = element.name
         div.appendChild(img)
@@ -66,6 +66,8 @@ async function ConstruirCada(array){
                 array[element].forEach(async function(link){
                     // Faz o Fetch e puxa o nome do bixo
                     let resposta = await pegarInfos(link)
+                    let primeira_pagina_starships = await pegarInfos("https://swapi.dev/api/starships/")
+                    let primeira_pagina_vehicles = await pegarInfos("https://swapi.dev/api/vehicles/")
                     let url = resposta['url'].slice(0, -1);
                     let ultimoDigito = url.slice(-1).charAt(0);
                     switch (element) {
@@ -77,17 +79,25 @@ async function ConstruirCada(array){
                             document.querySelector(`#${element}`).appendChild(link)
                             break;
                         case "starships":
-                            let linkst = document.createElement("a")
-                            linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                            linkst.innerHTML = resposta['name']
-                            document.querySelector(`#${element}`).appendChild(linkst)
-                            break
-                        case "vehicles":
-                                let linkv = document.createElement("a")
-                                linkv.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                                linkv.innerHTML = resposta['name']
-                                document.querySelector(`#${element}`).appendChild(linkv)
+                                let linkst = document.createElement("a")
+                                primeira_pagina_starships.results.forEach(cadaum => {
+                                    if(resposta['name'] === cadaum['name']){
+                                        linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
+                                    }
+                                })
+                                linkst.innerHTML = resposta['name']
+                                document.querySelector(`#${element}`).appendChild(linkst)
                                 break
+                        case "vehicles":
+                            let linkv = document.createElement("a")
+                            primeira_pagina_vehicles.results.forEach(cadaum => {
+                                if(resposta['name'] === cadaum['name']){
+                                    linkv.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
+                                }
+                            })
+                            linkv.innerHTML = resposta['name']
+                            document.querySelector(`#${element}`).appendChild(linkv)
+                            break
                         default:
                             break;
                     }
@@ -97,7 +107,10 @@ async function ConstruirCada(array){
                 let span = document.createElement("span")
                 if(array[element].includes("https")){
                     // let ultimoDigito = array[element].slice(-2).charAt(0);
-                    // let resposta = pegarInfos(array[element])
+                    pegarInfos(array[element])
+                    .then((resultado) => {
+                        span.innerHTML = resultado.name
+                    })
                 }else{
                     span.innerHTML = array[element]
                 }

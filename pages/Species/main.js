@@ -1,4 +1,4 @@
-url = "https://swapi.dev/api/films/"
+url = "https://swapi.dev/api/species/"
 
 const queryString = window.location.search
 const params = new URLSearchParams(queryString)
@@ -31,22 +31,22 @@ async function pegarInfos(link) {
     return dados;
   }
 
-function ConstruirTodos(array){
+  function ConstruirTodos(array){
     array.results.forEach(function(element,n){
         let number = n + 1
         let div = document.createElement('div')
         let img = document.createElement('img')
         let span = document.createElement('span')
-        img.setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${element.title.toLowerCase()}.jpg`)
+        img.setAttribute("src",`http://localhost/starWars2.0/resources/species/${element.name.toLowerCase()}.jpg`)
         img.setAttribute("width","300px")
-        span.innerHTML = element.title
+        span.innerHTML = element.name
         div.appendChild(img)
         div.appendChild(span)
         div.addEventListener("click",e =>{
-            window.location.href = `http://localhost/starWars2.0/pages/Films?id=${number}`
+            window.location.href = `http://localhost/starWars2.0/pages/species?id=${number}`
         })
         document.querySelector("body").appendChild(div)
-    });
+    })
 }
 
 async function ConstruirCada(array){
@@ -54,64 +54,37 @@ async function ConstruirCada(array){
     console.log(array)
     let div_o = document.querySelector("#one")
     div_o.classList.toggle("ativo")
-    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${array.title.toLowerCase()}.jpg?c=${Math.random()}`)
+
+    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/species/${array.name.toLowerCase()}.jpg?c=${Math.random()}`)
 
     let objetos = Object.keys(array)
+    console.log(objetos)
     objetos.forEach(element =>{
+        console.log(element)
         // Cada objeto ou texto desse item
         if(document.querySelector(`#${element}`)){
-            if(typeof array[element] === "object"){
+            if(array[element] === null){
+                return
+            }else if(typeof array[element] === "object"){
                 // Se for Objeto
                 let div = document.createElement("div")
+                console.log(array[element])
                 array[element].forEach(async function(link){
                     // Faz o Fetch e puxa o nome do bixo
                     let resposta = await pegarInfos(link)
                     let primeira_pagina_peoples = await pegarInfos("https://swapi.dev/api/people/")
-                    let primeira_pagina_starships = await pegarInfos("https://swapi.dev/api/starships/")
-                    let primeira_pagina_vehicles = await pegarInfos("https://swapi.dev/api/vehicles/")
-                    let primeira_pagina_species = await pegarInfos("https://swapi.dev/api/species/")
                     let url = resposta['url'].slice(0, -1);
                     let ultimoDigito = url.slice(-1).charAt(0);
                     switch (element) {
                         // esse switch monta link por link
-                        case "planets":
+                        case "films":
                             let link = document.createElement("a")
                             link.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                            link.innerHTML = resposta['name']
+                            link.innerHTML = resposta['title']
                             document.querySelector(`#${element}`).appendChild(link)
                             break;
-                        case "species":
-                            let links = document.createElement("a")
-                            primeira_pagina_species.results.forEach(cadaum => {
-                                if(resposta['name'] === cadaum['name']){
-                                    links.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                                }
-                            })
-                            links.innerHTML = resposta['name']
-                            document.querySelector(`#${element}`).appendChild(links)
-                            break
-                        case "starships":
-                            let linkst = document.createElement("a")
-                            primeira_pagina_starships.results.forEach(cadaum => {
-                                if(resposta['name'] === cadaum['name']){
-                                    linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                                }
-                            })
-                            linkst.innerHTML = resposta['name']
-                            document.querySelector(`#${element}`).appendChild(linkst)
-                            break
-                        case "vehicles":
-                                let linkv = document.createElement("a")
-                                primeira_pagina_vehicles.results.forEach(cadaum => {
-                                    if(resposta['name'] === cadaum['name']){
-                                        linkv.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
-                                    }
-                                })
-                                linkv.innerHTML = resposta['name']
-                                document.querySelector(`#${element}`).appendChild(linkv)
-                                break
-                        case "characters":
-                                let linkc = document.createElement("a")
+                        case "people":
+                            let linkc = document.createElement("a")
                                 primeira_pagina_peoples.results.forEach(cadaum => {
                                     if(resposta['name'] === cadaum['name']){
                                         linkc.setAttribute("href",`http://localhost/starWars2.0/pages/peoples?id=${ultimoDigito}`)
@@ -119,15 +92,22 @@ async function ConstruirCada(array){
                                 })
                                 linkc.innerHTML = resposta['name']
                                 document.querySelector(`#${element}`).appendChild(linkc)
-                                break
-                        default:
                             break;
                     }
                 })
             }else{
                 // Se for texto cai nesse
                 let span = document.createElement("span")
-                span.innerHTML = array[element]
+                if(array[element].includes("https")){
+                    // let ultimoDigito = array[element].slice(-2).charAt(0);
+                    pegarInfos(array[element])
+                    .then((resultado) => {
+                        span.innerHTML = resultado.name
+                    })
+                }else{
+                    span.innerHTML = array[element]
+                }
+                
                 document.querySelector(`#${element}`).appendChild(span)
             }
         }
