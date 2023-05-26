@@ -94,7 +94,10 @@ async function ConstruirCada(array){
                             let linkst = document.createElement("a")
                             primeira_pagina_starships.results.forEach(cadaum => {
                                 if(resposta['name'] === cadaum['name']){
-                                    linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
+                                    let urlt = resposta['url'].split('/');
+                                    let ultimoDigitoe = urlt[urlt.length - 2]
+                                    console.log(resposta['name'])
+                                    linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigitoe}`)
                                 }
                             })
                             linkst.innerHTML = resposta['name']
