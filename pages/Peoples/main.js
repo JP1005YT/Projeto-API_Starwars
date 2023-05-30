@@ -37,7 +37,7 @@ async function pegarInfos(link) {
         let div = document.createElement('div')
         let img = document.createElement('img')
         let span = document.createElement('span')
-        img.setAttribute("src",`http://localhost/starWars2.0/resources/peoples/${element.name.toLowerCase()}.jpg`)
+        img.setAttribute("src",`http://localhost/starWars2.0/resources/people/${element.name.toLowerCase()}.png`)
         img.setAttribute("width","300px")
         span.innerHTML = element.name
         div.appendChild(img)
@@ -54,7 +54,7 @@ async function ConstruirCada(array){
     console.log(array)
     let div_o = document.querySelector("#one")
     div_o.classList.toggle("ativo")
-    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/filmes/${array.name.toLowerCase()}.jpg?c=${Math.random()}`)
+    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/people/${array.name.toLowerCase()}.png?c=${Math.random()}`)
 
     let objetos = Object.keys(array)
     objetos.forEach(element =>{
@@ -81,8 +81,10 @@ async function ConstruirCada(array){
                         case "starships":
                                 let linkst = document.createElement("a")
                                 primeira_pagina_starships.results.forEach(cadaum => {
+                                    let urlt = resposta['url'].split('/');
+                                    let ultimoDigitoe = urlt[urlt.length - 2]
                                     if(resposta['name'] === cadaum['name']){
-                                        linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigito}`)
+                                        linkst.setAttribute("href",`http://localhost/starWars2.0/pages/${element}?id=${ultimoDigitoe}`)
                                     }
                                 })
                                 linkst.innerHTML = resposta['name']
