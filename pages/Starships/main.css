@@ -42,6 +42,9 @@ body > span:hover{
     display: block;
     background: #fff;
 }
+img{
+    margin-left: calc(50% - 50px);
+}
 .one div{
     padding: 1%;
     text-align: center;
