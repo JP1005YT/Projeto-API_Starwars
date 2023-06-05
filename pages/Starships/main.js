@@ -37,7 +37,7 @@ async function pegarInfos(link) {
         let div = document.createElement('div')
         let img = document.createElement('img')
         let span = document.createElement('span')
-        img.setAttribute("src",`http://localhost/starWars2.0/resources/starships/${element.name.toLowerCase()}.jpg`)
+        img.setAttribute("src",`http://localhost/starWars2.0/resources/starships/${element.name.toLowerCase()}.png`)
         img.setAttribute("width","300px")
         let urlt = element.url.split('/');
         let ultimoDigito = urlt[urlt.length - 2]
@@ -57,7 +57,7 @@ async function ConstruirCada(array){
     let div_o = document.querySelector("#one")
     div_o.classList.toggle("ativo")
 
-    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/starships/${array.name.toLowerCase()}.jpg?c=${Math.random()}`)
+    div_o.querySelector("img").setAttribute("src",`http://localhost/starWars2.0/resources/starships/${array.name.toLowerCase()}.png?c=${Math.random()}`)
 
     let objetos = Object.keys(array)
     objetos.forEach(element =>{
