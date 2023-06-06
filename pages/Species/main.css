@@ -42,7 +42,7 @@ body > span:hover{
     display: block;
     background: #fff;
 }
-img{
+.one > img{
     margin-left: calc(50% - 50px);
 }
 .one div{

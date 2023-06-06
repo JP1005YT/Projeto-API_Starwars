@@ -8,9 +8,6 @@
 h1{
     font-family: 'Poppins', sans-serif;
 }
-img{
-    margin-left: calc(50% - 50px);
-}
 body{
     overflow-x: hidden;
     display: flex;
@@ -44,6 +41,9 @@ body > span:hover{
     height: 100%;
     display: block;
     background: #fff;
+}
+.one > img{
+    margin-left: calc(50% - 50px);
 }
 .one div{
     padding: 1%;
